@@ -1,7 +1,7 @@
 ---
 controls:
 version: "aks-1.0"
-id: 3
+id: 4
 text: "Worker Node Security Configuration"
 type: "node"
 groups:

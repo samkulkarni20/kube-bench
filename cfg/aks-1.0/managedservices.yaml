@@ -1,7 +1,7 @@
 ---
 controls:
 version: "aks-1.0"
-id: 5
+id: 6
 text: "Managed Services"
 type: "managedservices"
 groups:
