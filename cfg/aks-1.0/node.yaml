@@ -1,7 +1,7 @@
 ---
 controls:
 version: "aks-1.0"
-id: 4
+id: 3
 text: "Worker Node Security Configuration"
 type: "node"
 groups:
@@ -86,40 +86,6 @@ groups:
           Run the below command (based on the file location on your system) on the each worker node.
           For example,
           chown root:root $kubeletkubeconfig
-        scored: false
-
-      - id: 3.1.7
-        text: "Ensure that the certificate authorities file permissions are set to 644 or more restrictive (Manual)"
-        audit: |
-          CAFILE=$(ps -ef | grep kubelet | grep -v apiserver | grep -- --client-ca-file= | awk -F '--client-ca-file=' '{print $2}' | awk '{print $1}')
-          if test -z $CAFILE; then CAFILE=$kubeletcafile; fi
-          if test -e $CAFILE; then stat -c permissions=%a $CAFILE; fi
-        tests:
-          test_items:
-            - flag: "permissions"
-              compare:
-                op: bitmask
-                value: "644"
-        remediation: |
-          Run the following command to modify the file permissions of the
-          --client-ca-file chmod 644 <filename>
-        scored: false
-
-      - id: 3.1.8
-        text: "Ensure that the client certificate authorities file ownership is set to root:root (Manual)"
-        audit: |
-          CAFILE=$(ps -ef | grep kubelet | grep -v apiserver | grep -- --client-ca-file= | awk -F '--client-ca-file=' '{print $2}' | awk '{print $1}')
-          if test -z $CAFILE; then CAFILE=$kubeletcafile; fi
-          if test -e $CAFILE; then stat -c %U:%G $CAFILE; fi
-        tests:
-          test_items:
-            - flag: root:root
-              compare:
-                op: eq
-                value: root:root
-        remediation: |
-          Run the following command to modify the ownership of the --client-ca-file.
-          chown root:root <filename>
         scored: false
 
       - id: 3.1.9
